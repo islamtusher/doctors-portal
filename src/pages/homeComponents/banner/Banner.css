@@ -1,0 +1,9 @@
+.hero{
+    /* background-image: url('../../../../public/assets/images/bg.png'); */
+    /* min-height: 90vh; */
+}
+.banner-btn{
+    padding: 0 20px;
+    /* background: linear-gradient(90deg, #19D3AE -22.5%, #0FCFEC 120.83%); */
+    /* background-color: linear-gradient(90deg, rgba(25, 211, 174, 1) 100%, rgba(15, 207, 236, 1) 100%) !important; */
+}
