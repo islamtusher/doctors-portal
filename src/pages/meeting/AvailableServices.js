@@ -21,9 +21,13 @@ const AvailableServices = ({ date }) => {
                     <div class="card  shadow-md">
                         <div class="card-body items-center text-center">
                             <h2 class="card-title text-secondary uppercase">{service?.name}</h2>
-                            <p>We are using cookies for no reason.</p>
+                            <p>{service?.slots?.length > 0 ?
+                                <span>{service?.slots[0]}</span>
+                                :
+                                <span className='text-orange-600'>No Slots Available</span>}
+                            </p>
                             <div class="card-actions justify-center">
-                                <button class="btn px-5 mt-6 banner-btn border-0 text-sm text-white bg-gradient-to-r from-secondary to-primary">Book Appointment</button>
+                                <button disabled={!service?.slots?.length > 0} class="btn px-5 mt-6 banner-btn border-0 text-sm text-white bg-gradient-to-r from-secondary to-primary">Book Appointment</button>
                             </div>
                         </div>
                     </div>)
