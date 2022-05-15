@@ -3,9 +3,9 @@ import React from 'react';
 const Appointment = () => {
     return (
         
-        <div class="card relative lg:card-side lg:items-center rounded-none bg-[url('/public/assets/images/appointment.png')]">
+        <div class="card overflow-visible lg:card-side lg:items-center rounded-none bg-[url('/public/assets/images/appointment.png')]">
             <figure className='lg:w-1/2'>
-                <img className=' mt-[-200px]  hidden lg:block' src="./assets/images/doctor-small.png" alt="Album" />
+                <img className=' mt-[-150px]  hidden lg:block' src="./assets/images/doctor-small.png" alt="Album" />
             </figure>
             <div class=" lg:w-1/2">
                 <div  iv className="card-body gap-6 lg:w-4/5 w-full text-white">
