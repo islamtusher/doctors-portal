@@ -1,0 +1,23 @@
+[
+    {
+      "_id": "627ffe76a1fb3ebd3b766026",
+      "picture": "./assets/images/people1.png",
+      "name": "Winson Herry",
+      "country": "Bangladesh",
+      "describe": "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content"
+    },
+    {
+      "_id": "627ffe7615ad3a2d1a25f7b5",
+      "picture": "./assets/images/people2.png",
+      "name": "Winson Herry",
+      "country": "Bangladesh",
+      "describe": "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content"
+    },
+    {
+      "_id": "627ffe769bb56216fcf774e2",
+      "picture": "./assets/images/people3.png",
+      "name": "Winson Herry",
+      "country": "Bangladesh",
+      "describe": "It is a long established fact that by the readable content of a lot layout. The point of using Lorem a more-or-less normal distribu to using Content here, content"
+    }
+  ]
