@@ -13,8 +13,8 @@ const Reviews = () => {
         <div className='reviews'>
             <div className="flex justify-between items-center px-12 my-28">
                 <div className="">
-                    <p className="sub-title text-primary text-xl">OUR SERVICES</p>
-                    <h1 className="main-title text-4xl">Services We Provide</h1>
+                    <p className="sub-title text-primary text-xl uppercase">OUR Testimonial</p>
+                    <h1 className="main-title text-4xl">What Our Patients Says</h1>
                 </div>
                 <img className='w-24 lg:w-48 ' src="./assets/icons/quote.svg" alt="" />
             </div>
