@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 
-const MeetingBanner = () => {
-    const [date, setDate] = useState(new Date())
+const MeetingBanner = ({date, setDate}) => {
     return (
         <div className="hero xl:w-11/12 mx-auto  min-h-[90vh] bg-[url('/public/assets/images/bg.png')]">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -17,7 +16,6 @@ const MeetingBanner = () => {
                     selected={date}
                     onSelect={setDate}
                     />
-                    <p>Your Selected Date: {format(date, 'PP')} </p>
                 </div>
             </div>
         </div>
