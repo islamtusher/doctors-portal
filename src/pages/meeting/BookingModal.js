@@ -1,11 +1,18 @@
+import React, { useState } from 'react';
 import { format } from 'date-fns';
-import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 const BookingModal = ({ service, date, setService }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const[error, setError] = useState('')
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const onSubmit = data => {
+    const onSubmit = (data, e) => {
+        data['treatmentName'] = service?.name
+        if (!/\S+@\S+\.\S+/.test(data?.email)) {
+            setError('Please Enter a Valid Email')
+            return
+        }
+        setError('')
         console.log(data);
         fetch('http://localhost:5000/bookingInfo', {
             method: 'POST',
@@ -15,17 +22,11 @@ const BookingModal = ({ service, date, setService }) => {
             body: JSON.stringify(data)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+                reset()
+            })
     }
-
-    // const handleBookingForm = (e) => {
-    //     e.preventDefault()
-    //     const name = e.target.name.value
-    //     const slot = e.target.time.value
-    //     const date = e.target.date.value
-    //     console.log(date);
-    //     setService(null)
-    // }
     return (
         <div>
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -41,18 +42,12 @@ const BookingModal = ({ service, date, setService }) => {
                                 service?.slots?.map(slot => <option>{slot}</option>)
                             }
                         </select>
-                        <input   placeholder="Full Name" className="input  input-bordered focus:input-primary focus:border-0 w-full " {...register("firstName", { required: true})}/>
-                        <input   type="tel" placeholder="Phone Number" className="input  input-bordered focus:input-primary focus:border-0 w-full " {...register("phone", { required: true})}/>
-                        <input   placeholder="Email" className="input  input-bordered focus:input-primary focus:border-0 w-full " {...register("email", { required: true})}/>
-                        <button  type='submit'  className='btn btn-prilmary w-full'>SUBMIT</button>
-                    </form>
-                    {/* <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 mt-7">
-                        <input className="input input-bordered focus:input-primary focus:border-0 w-full" placeholder="Full Name"  {...register("firstName", { required: true})} />
-                        <input className="input input-bordered focus:input-primary focus:border-0 w-full" type="tel" {...register("phone", { required: true})} />
-                        <input className="input input-bordered focus:input-primary focus:border-0 w-full" type="email" {...register("email", {required: true })} />
+                        <input   placeholder="Full Name" className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("firstName", { required: true})}/>
+                        <input   type="tel" placeholder="Phone Number" className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("phone", { required: true})}/>
+                        <input   placeholder="Email" className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("email", { required: true})}/>
+                        {error && <p className='text-orange-600'>{error}</p>}
                         <button type='submit' className='btn btn-prilmary w-full'>SUBMIT</button>
-                    </form> */}
-                    
+                    </form>
                 </div>
             </div>
         </div>
