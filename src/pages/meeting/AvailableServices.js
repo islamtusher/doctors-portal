@@ -20,20 +20,20 @@ const AvailableServices = ({ date }) => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16 px-6 lg:px-20 my-28">
             {
                 services.map(service =>
-                    <div key={service._id} setService={setService}  class="card  shadow-md">
-                        <div class="card-body items-center text-center">
-                            <h2 class="card-title text-secondary uppercase">{service?.name}</h2>
+                    <div key={service._id} setService={setService}  className="card  shadow-md">
+                        <div className="card-body items-center text-center">
+                            <h2 className="card-title text-secondary uppercase">{service?.name}</h2>
                             <p>{service?.slots?.length > 0 ?
                                 <span>{service?.slots[0]}</span>
                                 :
                                 <span className='text-orange-600'>No Slots Available</span>}
                             </p>
-                            <div class="card-actions justify-center">
+                            <div className="card-actions justify-center">
                                 <label
-                                    for="booking-modal"
+                                    htmlFor="booking-modal"
                                     onClick={()=>setService(service)}
                                     disabled={!service?.slots?.length > 0}
-                                    class="btn modal-button px-5 mt-6 banner-btn border-0 text-white bg-gradient-to-r from-secondary to-primary">
+                                    className="btn modal-button px-5 mt-6 banner-btn border-0 text-white bg-gradient-to-r from-secondary to-primary">
                                     Book Appointment
                                 </label>        
                             </div>
@@ -41,7 +41,7 @@ const AvailableServices = ({ date }) => {
                     </div>)
             }
             </div>
-            {service && <BookingModal service={service}></BookingModal>}
+            {service && <BookingModal date={date} service={service} setService={setService}></BookingModal>}
         </div>
     );
 };
