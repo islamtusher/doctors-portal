@@ -7,13 +7,16 @@ const BookingModal = ({ service, date, setService }) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const onSubmit = (data, e) => {
+        // add treatment name into storing data
         data['treatmentName'] = service?.name
+       
+        // email validtion
         if (!/\S+@\S+\.\S+/.test(data?.email)) {
             setError('Please Enter a Valid Email')
             return
         }
         setError('')
-        console.log(data);
+        // Store the Booking Info on DB
         fetch('http://localhost:5000/bookingInfo', {
             method: 'POST',
             headers: {
@@ -23,8 +26,7 @@ const BookingModal = ({ service, date, setService }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                reset()
+                reset() // reset input filds
             })
     }
     return (
