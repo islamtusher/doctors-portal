@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
     return (
         <footer className=" py-20 text-accent bg-center bg-cover bg-[url('/public/assets/images/footer.png')]">
+            <div className=" text-center">
+                <h1 className='main-title text-4xl my-16'> GET IN TOUCH</h1>
+            </div>
             <div className="footer justify-items-center  ">
                 <div>
                     <span className="footer-title">Services</span> 

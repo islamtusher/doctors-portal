@@ -1,7 +1,13 @@
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { Link } from 'react-router-dom';
+import auth from '../../../firebaseConfig';
 import CustomLink from '../../customLInk/CustomLink';
 
 const Navbar = () => {
+    const [user, loading, error] = useAuthState(auth)
+    const currentUser = user?.email?.split('@')[0]
     const navMenu = <>
         <li><CustomLink to="/">Home</CustomLink></li>
         <li><CustomLink to="/about">About</CustomLink></li>
@@ -9,7 +15,19 @@ const Navbar = () => {
         <li><CustomLink to="/meeting">Meeting</CustomLink></li>
         <li><CustomLink to="/reviews">Reviews</CustomLink></li>
         <li><CustomLink to="/contact">Contact</CustomLink></li>
-        <li><CustomLink to="/login">Login</CustomLink></li>
+        {
+            user?.email ? 
+                <>
+                    <button className='btn btn-primary' onClick={() => signOut(auth)}>LogOut</button>
+                    <li>{currentUser}</li>
+                </>
+                :
+                <>
+                    <li><CustomLink to="/login">Login</CustomLink></li>
+                    <li><CustomLink to="/signup">SingUP</CustomLink></li>
+                </>
+        }
+
     </>
     return (
         <div className="">
@@ -23,7 +41,7 @@ const Navbar = () => {
                             {navMenu}
                         </ul>
                     </div>
-                    <a href="#" className="btn btn-ghost normal-case text-xl">Doctors Portal</a>
+                    <Link to='/' className="btn btn-ghost normal-case text-2xl">Doctors Portal</Link>
                 </div>
                 <div className="navbar-end hidden lg:flex">
                     <ul className="menu menu-horizontal p-0">

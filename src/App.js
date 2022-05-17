@@ -10,6 +10,7 @@ import Login from './pages/login/Login';
 import Meeting from './pages/meeting/Meeting';
 import Footer from './pages/shared/footer/Footer';
 import Navbar from './pages/shared/navbar/Navbar';
+import SignUp from './pages/signUp/SignUp';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/reviews' element={<Reviews></Reviews>} ></Route>
         <Route path='/contact' element={<Contact></Contact>} ></Route>
         <Route path='/login' element={<Login></Login>} ></Route>
+        <Route path='/signup' element={<SignUp></SignUp>} ></Route>
       </Routes>
       <Footer></Footer>
     </div>
