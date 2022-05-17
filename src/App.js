@@ -1,6 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import Home from './pages/home/Home';
 import About from './pages/homeComponents/about/About';
 import Appointment from './pages/homeComponents/appointment/Appointment';
@@ -11,6 +12,7 @@ import Meeting from './pages/meeting/Meeting';
 import Footer from './pages/shared/footer/Footer';
 import Navbar from './pages/shared/navbar/Navbar';
 import SignUp from './pages/signUp/SignUp';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return (
@@ -27,6 +29,18 @@ function App() {
         <Route path='/signup' element={<SignUp></SignUp>} ></Route>
       </Routes>
       <Footer></Footer>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        />
+        <ToastContainer />
     </div>
   );
 }
