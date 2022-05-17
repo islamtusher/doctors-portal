@@ -15,17 +15,17 @@ const SignUp = () => {
 
     // Handle Sing Up form
     const onSubmit = (data) => {
-        // console.log(data);
         createUserWithEmailAndPassword(data.email, data.password)
     }
 
+    // reset form inputs & signUp conformation
     useEffect(() => {
         if (user) {
-            toast('New User LogIn')
+            toast('New User Register')
             reset()
         }
     }, [user, reset])
-    
+
     // handle react firebase hooks Errors
     useEffect(() => {
         const hookError = creatingUserError || googleSignInError
@@ -53,9 +53,9 @@ const SignUp = () => {
                 <h3 className='text-center text-2xl'>LOGIN</h3>
 
                 <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col mt-4'>
-                    <div class="form-control w-full max-w-xs">
-                        <label class="label">
-                            <span class="label-text text-lg">Name</span>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            <span className="label-text text-lg">Name</span>
                         </label>
                         <input
                             type='text'
@@ -63,9 +63,9 @@ const SignUp = () => {
                             {...register("name", { required: true })}
                         />
                     </div>
-                    <div class="form-control w-full max-w-xs">
-                        <label class="label">
-                            <span class="label-text text-lg">Email</span>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            <span className="label-text text-lg">Email</span>
                         </label>
                         <input
                             type='email'
@@ -85,9 +85,9 @@ const SignUp = () => {
                         {errors?.email?.type === 'pattern' && <p className='text-red-500'>{errors?.email?.message}</p>}
                         {hooksError && <p className='text-red-500'>{hooksError}</p> }
                     </div>
-                    <div class="form-control w-full max-w-xs">
-                        <label class="label">
-                            <span class="label-text text-lg">Password</span>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label">
+                            <span className="label-text text-lg">Password</span>
                         </label>
                         <input
                             type='password'
