@@ -18,13 +18,13 @@ const Navbar = () => {
         {
             user?.email ? 
                 <>
-                    <button className='btn btn-primary' onClick={() => signOut(auth)}>LogOut</button>
-                    <li>{currentUser}</li>
+                    <button className='btn btn-ghost' onClick={() => signOut(auth)}>SignOut</button>
+                    <li><p>{currentUser}</p></li>
                 </>
                 :
                 <>
-                    <li><CustomLink to="/login">Login</CustomLink></li>
-                    <li><CustomLink to="/signup">SingUP</CustomLink></li>
+                    <li><CustomLink to="/login">LOGIN</CustomLink></li>
+                    <li><CustomLink to="/signup">SIGNUP</CustomLink></li>
                 </>
         }
     </>

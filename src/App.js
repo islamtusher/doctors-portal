@@ -13,15 +13,21 @@ import Footer from './pages/shared/footer/Footer';
 import Navbar from './pages/shared/navbar/Navbar';
 import SignUp from './pages/signUp/SignUp';
 import { ToastContainer } from 'react-toastify';
+import RequireAuth from './pages/RequireAuth';
 
 function App() {
   return (
-    <div className='max-w-[1428px] mx-auto'>
+    <div className='max-w-[1488px] mx-auto'>
       <Navbar></Navbar>
       <Routes>
         <Route path='/' element={<Home></Home>} ></Route>
         <Route path='/about' element={<About></About>} ></Route>
-        <Route path='/appointment' element={<Appointment></Appointment>} ></Route>
+        <Route path='/appointment' element={
+            <RequireAuth>
+              <Appointment></Appointment>
+            </RequireAuth>
+        }>
+        </Route>
         <Route path='/meeting' element={ <Meeting></Meeting>} ></Route>
         <Route path='/reviews' element={<Reviews></Reviews>} ></Route>
         <Route path='/contact' element={<Contact></Contact>} ></Route>

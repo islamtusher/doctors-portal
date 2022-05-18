@@ -3,11 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebaseConfig';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [user] = useAuthState(auth) // current User
     const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/";
+    
     const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
     const[hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''}) // Errors by react firebase hooks
 
@@ -17,7 +20,7 @@ const Login = () => {
     
     useEffect(() => {
         if (user) {
-            navigate('/')
+            navigate(from, { replace: true });
             toast('User LogIn')
             reset()
         }
