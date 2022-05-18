@@ -20,13 +20,11 @@ const SignUp = () => {
     const onSubmit = async(data) => {
         await createUserWithEmailAndPassword(data.email, data.password)
         await updateProfile({ displayName: data.name })
-        console.log('profile update done');
     }
 
     // reset form inputs & signUp conformation
     useEffect(() => {
         if (user) {
-            console.log(user);
             navigate('/')
             toast('New User Register')
             reset()
@@ -51,7 +49,6 @@ const SignUp = () => {
         }
     }, [creatingUserError, googleSignInError])
 
-    console.log(profileUpdatingError?.code);    
     return (
         <div className="">
             <div className='w-[385px] mx-auto shadow-lg px-5 mt-12 pt-5 pb-7 rounded-lg '>

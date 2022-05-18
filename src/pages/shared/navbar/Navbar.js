@@ -1,9 +1,11 @@
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../../firebaseConfig';
 import CustomLink from '../../customLInk/CustomLink';
+import LoginModal from '../../loginModal/LoginModal';
+import SignupModal from '../../signupModal/SignupModal';
 
 const Navbar = () => {
     const [user, loading, error] = useAuthState(auth)
@@ -15,6 +17,9 @@ const Navbar = () => {
         <li><CustomLink to="/meeting">Meeting</CustomLink></li>
         <li><CustomLink to="/reviews">Reviews</CustomLink></li>
         <li><CustomLink to="/contact">Contact</CustomLink></li>
+        {/* <li><label htmlFor="login-modal" className="btn modal-button bg-white border-0">Login-M</label></li>
+        <li><label htmlFor="signup-modal" className="btn modal-button bg-white border-0">SignUp-M</label></li> */}
+
         {
             user?.email ? 
                 <>
@@ -28,7 +33,6 @@ const Navbar = () => {
                 </>
         }
     </>
-    console.log(user);
     return (
         <div className="">
              <div className="navbar xl:w-11/12 mx-auto ">
@@ -49,6 +53,12 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
+            {!user &&
+                <>
+                <LoginModal></LoginModal>
+                <SignupModal></SignupModal>
+                </>
+            }
         </div>
     );
 };

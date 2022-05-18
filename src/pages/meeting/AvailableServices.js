@@ -19,8 +19,8 @@ const AvailableServices = ({ date }) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16 px-6 lg:px-20 my-28">
             {
-                services.map(service =>
-                    <div key={service._id} setService={setService}  className="card  shadow-md">
+                services.map((service) =>
+                    <div key={service._id} className="card shadow-md">
                         <div className="card-body items-center text-center">
                             <h2 className="card-title text-secondary uppercase">{service?.name}</h2>
                             <p>{service?.slots?.length > 0 ?

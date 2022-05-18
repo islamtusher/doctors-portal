@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useAuthState, useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebaseConfig';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { async } from '@firebase/util';
+import Loading from '../loading/Loading';
 
 const Login = () => {
     const [user] = useAuthState(auth) // current User
+    const [email, setEmail] = useState('')
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state?.from?.pathname || "/";
     
-    const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
+    const { register, handleSubmit, reset,getValues, formState: { errors } } = useForm(); // react form hooks
     const[hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''}) // Errors by react firebase hooks
 
     // react firebase hooks
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
     const [ signInWithEmailAndPassword, , loading, emailPassSignInError] = useSignInWithEmailAndPassword(auth);
+    const [sendPasswordResetEmail, sending, passwordResetError] = useSendPasswordResetEmail(auth);
     
     useEffect(() => {
         if (user) {
@@ -24,8 +28,16 @@ const Login = () => {
             toast('User LogIn')
             reset()
         }
-    }, [user, reset])
-    
+    }, [user, reset, from, navigate])
+
+
+    // handle Password Reset
+    const handleresetPassword = async() => {
+        const email = getValues('email')
+        await sendPasswordResetEmail(email)
+        toast('Reset Password Email Sended')
+    }
+
     // Handle Login Form
     const onSubmit = data => {
         signInWithEmailAndPassword(data?.email, data?.password)
@@ -54,16 +66,18 @@ const Login = () => {
                     break;
             }
         }
-    },[emailPassSignInError, googleSignInError, hooksErrors])
+    },[emailPassSignInError, googleSignInError])
     return (
         <div className='w-[385px] mx-auto shadow-lg mt-8 px-5 pt-5 pb-7 rounded-lg '>
+            { sending && <Loading data="Sending"></Loading>}
             <h3 className='text-center text-2xl'>LOGIN</h3>
             <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col mt-4'>
                 <div className="form-control w-full max-w-xs">
                     <label className="label">
                         <span className="label-text text-lg">Email</span>
                     </label>
-                    <input type='email' className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("email", { required: true})}/>
+                    {/* onChange={()=>getUserEmail(getValues("email"))} */}
+                    <input  type='email' className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("email", { required: true})}/>
                     {hooksErrors.emailError && <p className='text-red-500'>{hooksErrors.emailError}</p>}
                 </div>
                 <div className="form-control w-full max-w-xs">
@@ -72,7 +86,7 @@ const Login = () => {
                     </label>
                     <input type='password' className="input input-bordered focus:input-primary focus:border-0 w-full " {...register("password", { required: true})}/>
                     {hooksErrors.passwordError && <p className='text-red-500'>{hooksErrors.passwordError}</p>}
-                    <p className='cursor-pointer mt-1'>Forget Password?</p>
+                    <p onClick={handleresetPassword} className='cursor-pointer mt-1'>Forget Password?</p>
                 </div>
 
                 <button className="btn btn-accent text-base-500 w-full mt-6 mb-2" type='submit'>LOGIN</button>
