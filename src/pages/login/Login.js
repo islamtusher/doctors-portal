@@ -3,9 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useAuthState, useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebaseConfig';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [user] = useAuthState(auth) // current User
+    const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
     const[hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''}) // Errors by react firebase hooks
 
@@ -14,8 +16,12 @@ const Login = () => {
     const [ signInWithEmailAndPassword, , loading, emailPassSignInError] = useSignInWithEmailAndPassword(auth);
     
     useEffect(() => {
-        console.log(emailPassSignInError);
-    }, [emailPassSignInError])
+        if (user) {
+            navigate('/')
+            toast('User LogIn')
+            reset()
+        }
+    }, [user, reset])
     
     // Handle Login Form
     const onSubmit = data => {
@@ -67,7 +73,7 @@ const Login = () => {
                 </div>
 
                 <button className="btn btn-accent text-base-500 w-full mt-6 mb-2" type='submit'>LOGIN</button>
-                <p className='text-center text-sm '>New To Doctors Portal? <span className='text-primary cursor-pointer'>Create A New Account</span></p>
+                <p className='text-center text-sm '>New To Doctors Portal? <span onClick={()=>navigate('/signup')} className='text-primary cursor-pointer'>Create A New Account</span></p>
             </form>
 
             <div className="divider">OR</div>

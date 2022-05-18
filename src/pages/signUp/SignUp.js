@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebaseConfig';
 
 const SignUp = () => {
     const [user] = useAuthState(auth) // current User
+    const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
     const[hooksError, setHooksError] = useState('') // Errors by react firebase hooks
     
     // react firebse Hooks
     const [createUserWithEmailAndPassword, ,creatingUserLoading, creatingUserError,] = useCreateUserWithEmailAndPassword(auth);
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
-
+    const [updateProfile, updating, profileUpdatingError] = useUpdateProfile(auth);
+    
     // Handle Sing Up form
-    const onSubmit = (data) => {
-        createUserWithEmailAndPassword(data.email, data.password)
+    const onSubmit = async(data) => {
+        await createUserWithEmailAndPassword(data.email, data.password)
+        await updateProfile({ displayName: data.name })
+        console.log('profile update done');
     }
 
     // reset form inputs & signUp conformation
     useEffect(() => {
         if (user) {
+            console.log(user);
+            navigate('/')
             toast('New User Register')
             reset()
         }
@@ -30,11 +37,9 @@ const SignUp = () => {
     useEffect(() => {
         const hookError = creatingUserError || googleSignInError
         if (hookError) {
-            console.log(hookError?.code);
             switch (hookError?.code) {
                 case 'auth/email-already-in-use':
                     setHooksError('Email Is Allready Registered')
-                    console.log(hookError.code);
                     break;  
                 case 'auth/popup-closed-by-user':
                     toast('Google Sign In Canceled By User')
@@ -46,7 +51,7 @@ const SignUp = () => {
         }
     }, [creatingUserError, googleSignInError])
 
-    
+    console.log(profileUpdatingError?.code);    
     return (
         <div className="">
             <div className='w-[385px] mx-auto shadow-lg px-5 mt-12 pt-5 pb-7 rounded-lg '>
@@ -115,8 +120,8 @@ const SignUp = () => {
                     </div>
                     <button type='submit' className="btn btn-accent text-base-500 w-full mt-6 mb-2" >SIGN UP</button>
                     <p className='text-center text-sm '>
-                        New To Doctors Portal?
-                        <span className='text-primary cursor-pointer'> Create A New Account</span>
+                        Allready Registered?
+                        <span onClick={()=>navigate('/login')} className='text-primary cursor-pointer'> Please Log In</span>
                     </p>
                 </form>
 

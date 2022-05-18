@@ -7,7 +7,7 @@ import CustomLink from '../../customLInk/CustomLink';
 
 const Navbar = () => {
     const [user, loading, error] = useAuthState(auth)
-    const currentUser = user?.email?.split('@')[0]
+    const currentUser = user?.displayName?.split(' ')[0]
     const navMenu = <>
         <li><CustomLink to="/">Home</CustomLink></li>
         <li><CustomLink to="/about">About</CustomLink></li>
@@ -27,8 +27,8 @@ const Navbar = () => {
                     <li><CustomLink to="/signup">SingUP</CustomLink></li>
                 </>
         }
-
     </>
+    console.log(user);
     return (
         <div className="">
              <div className="navbar xl:w-11/12 mx-auto ">
