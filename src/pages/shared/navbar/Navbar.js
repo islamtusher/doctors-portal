@@ -22,7 +22,8 @@ const Navbar = () => {
         <li><CustomLink to="/contact">Contact</CustomLink></li>
         {
             user?.email ? 
-                <>
+                <>  
+                    <li><CustomLink to="/dashboard">Dashboard</CustomLink></li>
                     <button className='btn btn-ghost' onClick={() => signOut(auth)}>SignOut</button>
                     <li><p>{currentUser}</p></li>
                 </>
