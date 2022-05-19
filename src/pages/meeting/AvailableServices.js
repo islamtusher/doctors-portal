@@ -5,12 +5,14 @@ import BookingModal from './BookingModal';
 const AvailableServices = ({ date }) => {
     const [services, setServices] = useState([])
     const [service, setService] = useState(null)
-
+    const formatedDate = format(date, 'PP')
+    
     useEffect(() => {
-        fetch('http://localhost:5000/availableServices')
+        fetch(`http://localhost:5000/available?date=${formatedDate}`)
             .then(res => res.json())
             .then(data => setServices(data))
-    }, [])
+    }, [formatedDate])
+
     return (
         <div>
             <div className="text-center mt-20">
@@ -28,6 +30,7 @@ const AvailableServices = ({ date }) => {
                                 :
                                 <span className='text-orange-600'>No Slots Available</span>}
                             </p>
+                            <p>Slots Available: {service?.slots?.length}</p>
                             <div className="card-actions justify-center">
                                 <label
                                     htmlFor="booking-modal"
