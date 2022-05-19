@@ -1,17 +1,29 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import Loading from '../loading/Loading';
 import BookingModal from './BookingModal';
 
 const AvailableServices = ({ date }) => {
-    const [services, setServices] = useState([])
+    // const [services, setServices] = useState([])
     const [service, setService] = useState(null)
     const formatedDate = format(date, 'PP')
-    
-    useEffect(() => {
+
+    const { data: services, isLoading, refetch } = useQuery(['servicesData', formatedDate], () =>
         fetch(`http://localhost:5000/available?date=${formatedDate}`)
-            .then(res => res.json())
-            .then(data => setServices(data))
-    }, [formatedDate])
+        .then(res => res.json()
+     )
+    )
+    
+    if (isLoading) {
+        return <Loading data='Data Loading...'></Loading>
+    }
+    //rmv have a batter option for this on top
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/available?date=${formatedDate}`)
+    //         .then(res => res.json())
+    //         .then(data => setServices(data))
+    // }, [formatedDate])
 
     return (
         <div>
@@ -21,7 +33,7 @@ const AvailableServices = ({ date }) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-16 px-6 lg:px-20 my-28">
             {
-                services.map((service) =>
+                services?.map((service) =>
                     <div key={service._id} className="card shadow-md">
                         <div className="card-body items-center text-center">
                             <h2 className="card-title text-secondary uppercase">{service?.name}</h2>
@@ -44,7 +56,7 @@ const AvailableServices = ({ date }) => {
                     </div>)
             }
             </div>
-            {service && <BookingModal date={date} service={service} setService={setService}></BookingModal>}
+            {service && <BookingModal  refetch={refetch} date={date} service={service} setService={setService}></BookingModal>}
         </div>
     );
 };

@@ -5,7 +5,7 @@ import { useAuthState} from 'react-firebase-hooks/auth';
 import auth from '../../firebaseConfig';
 import { toast } from 'react-toastify';
 
-const BookingModal = ({ service, date, setService }) => {
+const BookingModal = ({ service, date, setService, refetch }, ) => {
     const [user,loading] = useAuthState(auth) // current User
     const[error, setError] = useState('')
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -38,6 +38,7 @@ const BookingModal = ({ service, date, setService }) => {
                     toast('Booking Confirm')
                     reset() // reset input filds
                     setService(null) // BookingModal closer
+                    refetch()
                 }
                 else {
                     toast.error(data.message)
