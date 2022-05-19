@@ -26,6 +26,11 @@ const LoginModal = () => {
             document.getElementById('login-modal').checked = false
         }
     }, [user, reset])
+    //navigateToSignupModal
+    const navigateToSignupModal = () => {
+        document.getElementById('signup-modal').checked = true
+        document.getElementById('login-modal').checked = false
+    }
     
     // Handle Login Form
     const onSubmit = data => {
@@ -81,14 +86,11 @@ const LoginModal = () => {
                         </div>
 
                         <button className="btn btn-accent text-base-500 w-full mt-6 mb-2" type='submit'>LOGIN</button>
-                        <p className='text-center text-sm '>New To Doctors Portal? <span onClick={()=>navigate('/signup')} className='text-primary cursor-pointer'>Create A New Account</span></p>
+                        <p className='text-center text-sm '>New To Doctors Portal? <span onClick={navigateToSignupModal} className='text-primary cursor-pointer'>Create A New Account</span></p>
                     </form>
 
                     <div className="divider">OR</div>
                     <button onClick={()=>signInWithGoogle()} className="btn bg-white text-accent uppercase font-normal hover:border-secondary hover:bg-white hover:text-secondary w-full " type='submit'>Google Sign In</button>
-                    {/* <div className="modal-action">
-                        <label htmlFor="login-modal" className="btn">Yay!</label>
-                    </div> */}
                 </div>
             </div>
         </div>

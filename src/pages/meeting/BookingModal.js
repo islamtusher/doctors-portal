@@ -13,7 +13,6 @@ const BookingModal = ({ service, date, setService }) => {
     const onSubmit = (data, e) => {
         // add treatment name into storing data
         data['treatmentName'] = service?.name
-       
         // email validtion
         if (!/\S+@\S+\.\S+/.test(data?.email)) {
             setError('Please Enter a Valid Email')
@@ -30,8 +29,14 @@ const BookingModal = ({ service, date, setService }) => {
         })
             .then(res => res.json())
             .then(data => {
-                toast('Booking Confirm')
-                reset() // reset input filds
+                if (data.bookign) {
+                    toast('Booking Confirm')
+                    reset() // reset input filds
+                    setService(null) // for BookingModal close
+                }
+                else {
+                    toast.error(data.message)
+                }
             })
     }
     return (
@@ -39,7 +44,7 @@ const BookingModal = ({ service, date, setService }) => {
             <input type="checkbox" id="booking-modal" className="modal-toggle " />
             <div className="modal  modal-bottom sm:modal-middle">
                 <div className="modal-box  px-12">
-                    <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> 
+                    <label onClick={reset} htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label> 
                     <h3 className="font-bold text-lg">Appointment for <span className='text-primary text-2xl'>{ service?.name}</span></h3>
                     
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 mt-7">

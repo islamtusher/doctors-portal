@@ -28,10 +28,10 @@ const Navbar = () => {
                 </>
                 :
                 <>
-                    <li><label htmlFor="login-modal" className="btn modal-button bg-white border-0">Login-M</label></li>
-                    <li><label htmlFor="signup-modal" className="btn modal-button bg-white border-0">SignUp-M</label></li>
-                    {/* <li><CustomLink to="/login">LOGIN</CustomLink></li>
-                    <li><CustomLink to="/signup">SIGNUP</CustomLink></li> */}
+                    {/* <li><label htmlFor="login-modal" className="btn modal-button bg-white border-0">Login-M</label></li>
+                    <li><label htmlFor="signup-modal" className="btn modal-button bg-white border-0">SignUp-M</label></li> */}
+                    <li><CustomLink to="/login">LOGIN</CustomLink></li>
+                    <li><CustomLink to="/signup">SIGNUP</CustomLink></li>
                 </>
         }
     </>
@@ -55,12 +55,12 @@ const Navbar = () => {
                     </ul>
                 </div>
             </div>
-            {!user &&
+            {/* {!user &&
                 <>
-                {/* <LoginModal></LoginModal> */}
-                <SignupModal></SignupModal>
+                    <LoginModal></LoginModal>
+                    <SignupModal></SignupModal>
                 </>
-            }
+            } */}
         </div>
     );
 };
