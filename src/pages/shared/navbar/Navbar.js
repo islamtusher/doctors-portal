@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../../firebaseConfig';
@@ -9,7 +9,10 @@ import SignupModal from '../../signupModal/SignupModal';
 
 const Navbar = () => {
     const [user, loading, error] = useAuthState(auth)
-    const currentUser = user?.displayName?.split(' ')[0]
+    const [currentUser, setCurrentUser] = useState('')
+    useEffect(() => {
+        setCurrentUser(user?.displayName?.split(' ')[0])
+    },[user?.displayName])
     const navMenu = <>
         <li><CustomLink to="/">Home</CustomLink></li>
         <li><CustomLink to="/about">About</CustomLink></li>
@@ -17,9 +20,6 @@ const Navbar = () => {
         <li><CustomLink to="/meeting">Meeting</CustomLink></li>
         <li><CustomLink to="/reviews">Reviews</CustomLink></li>
         <li><CustomLink to="/contact">Contact</CustomLink></li>
-        {/* <li><label htmlFor="login-modal" className="btn modal-button bg-white border-0">Login-M</label></li>
-        <li><label htmlFor="signup-modal" className="btn modal-button bg-white border-0">SignUp-M</label></li> */}
-
         {
             user?.email ? 
                 <>
@@ -28,8 +28,10 @@ const Navbar = () => {
                 </>
                 :
                 <>
-                    <li><CustomLink to="/login">LOGIN</CustomLink></li>
-                    <li><CustomLink to="/signup">SIGNUP</CustomLink></li>
+                    <li><label htmlFor="login-modal" className="btn modal-button bg-white border-0">Login-M</label></li>
+                    <li><label htmlFor="signup-modal" className="btn modal-button bg-white border-0">SignUp-M</label></li>
+                    {/* <li><CustomLink to="/login">LOGIN</CustomLink></li>
+                    <li><CustomLink to="/signup">SIGNUP</CustomLink></li> */}
                 </>
         }
     </>
@@ -55,7 +57,7 @@ const Navbar = () => {
             </div>
             {!user &&
                 <>
-                <LoginModal></LoginModal>
+                {/* <LoginModal></LoginModal> */}
                 <SignupModal></SignupModal>
                 </>
             }

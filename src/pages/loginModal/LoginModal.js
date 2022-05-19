@@ -20,11 +20,12 @@ const LoginModal = () => {
     
     useEffect(() => {
         if (user) {
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
             toast('User LogIn')
             reset()
+            document.getElementById('login-modal').checked = false
         }
-    }, [user, reset, from])
+    }, [user, reset])
     
     // Handle Login Form
     const onSubmit = data => {

@@ -4,20 +4,23 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebaseConfig';
+import Loading from '../loading/Loading';
 
 const SignUp = () => {
     const [user] = useAuthState(auth) // current User
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
     const[hooksError, setHooksError] = useState('') // Errors by react firebase hooks
-    
+    // const [loading, setLoading] = useState(false) //rmv loading
+    // const [emailVerify, serEmailVerify] = useState(false) //rmv emailvarify
+
     // react firebse Hooks
-    const [createUserWithEmailAndPassword, ,creatingUserLoading, creatingUserError,] = useCreateUserWithEmailAndPassword(auth);
+    const [createUserWithEmailAndPassword, ,creatingUserLoading, creatingUserError,] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification : true});
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
-    const [updateProfile, updating, profileUpdatingError] = useUpdateProfile(auth);
+    const [updateProfile] = useUpdateProfile(auth);
     
     // Handle Sing Up form
-    const onSubmit = async(data) => {
+    const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password)
         await updateProfile({ displayName: data.name })
     }
@@ -29,7 +32,7 @@ const SignUp = () => {
             toast('New User Register')
             reset()
         }
-    }, [user, reset])
+    }, [user, reset, navigate])
 
     // handle react firebase hooks Errors
     useEffect(() => {
@@ -48,9 +51,10 @@ const SignUp = () => {
             }
         }
     }, [creatingUserError, googleSignInError])
-
+    
     return (
         <div className="">
+            {/* {user && loading && <Loading data='Please Verify Your Email Firstly'></Loading>} //rmv varify loading */}
             <div className='w-[385px] mx-auto shadow-lg px-5 mt-12 pt-5 pb-7 rounded-lg '>
                 <h3 className='text-center text-2xl'>LOGIN</h3>
 

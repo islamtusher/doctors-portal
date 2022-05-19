@@ -28,6 +28,7 @@ const SignupModal = () => {
             navigate('/')
             toast('New User Register')
             reset()
+            document.getElementById('login-modal').checked = false
         }
     }, [user, reset, navigate])
 

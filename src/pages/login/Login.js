@@ -16,7 +16,7 @@ const Login = () => {
     
     const { register, handleSubmit, reset,getValues, formState: { errors } } = useForm(); // react form hooks
     const[hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''}) // Errors by react firebase hooks
-
+    
     // react firebase hooks
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
     const [ signInWithEmailAndPassword, , loading, emailPassSignInError] = useSignInWithEmailAndPassword(auth);

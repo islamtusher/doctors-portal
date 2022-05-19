@@ -14,11 +14,14 @@ import Navbar from './pages/shared/navbar/Navbar';
 import SignUp from './pages/signUp/SignUp';
 import { ToastContainer } from 'react-toastify';
 import RequireAuth from './pages/RequireAuth';
+import LoginModal from './pages/loginModal/LoginModal';
+import SignupModal from './pages/signupModal/SignupModal';
 
 function App() {
   return (
     <div className='max-w-[1488px] mx-auto'>
       <Navbar></Navbar>
+      <LoginModal></LoginModal>
       <Routes>
         <Route path='/' element={<Home></Home>} ></Route>
         <Route path='/about' element={<About></About>} ></Route>
