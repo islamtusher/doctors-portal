@@ -66,7 +66,7 @@ const LoginModal = () => {
             <input type="checkbox" id="login-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box">
-                    <label htmlFor="login-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="login-modal"className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className='text-center text-2xl'>LOGIN</h3>
                     <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col mt-4'>
                         <div className="form-control w-full max-w-xs">

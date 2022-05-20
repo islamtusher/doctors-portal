@@ -8,7 +8,6 @@ const Reviews = () => {
             .then(res => res.json())
             .then(data => setReviews(data))
     }, [])
-    console.log(reviews);
     return (
         <div className='reviews'>
             <div className="flex justify-between items-center px-12 my-28">
