@@ -18,8 +18,10 @@ import DashBoard from './pages/dashboard/DashBoard';
 import MyAppointment from './pages/myAppointment/MyAppointment';
 import MyReviews from './pages/myReviews/MyReviews';
 import Users from './pages/dashBoard/Users';
+import useAdmin from './pages/hooks/useAdmin';
 
 function App() {
+  const [admin] = useAdmin()
   return (
     <div className='max-w-[1488px] mx-auto'>
       <Navbar></Navbar>
@@ -38,14 +40,10 @@ function App() {
             </RequireAuth>
         }>
         </Route>
-        <Route path='/dashboard' element={
-            <RequireAuth>
-              <DashBoard></DashBoard>
-            </RequireAuth>
-        }>
+        <Route path='/dashboard' element={<RequireAuth><DashBoard></DashBoard></RequireAuth>}>
           <Route index element={<MyAppointment/>}></Route>
           <Route path="myreviews" element={<MyReviews/>} ></Route>
-          <Route path="users" element={<Users/>} ></Route>
+          {admin && <Route path="users" element={<Users />} ></Route>}
         </Route>
         <Route path='/reviews' element={<Reviews></Reviews>} ></Route>
         <Route path='/contact' element={<Contact></Contact>} ></Route>
@@ -55,14 +53,8 @@ function App() {
       <Footer></Footer>
       <ToastContainer
         position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
+        autoClose={500}
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
         />
         <ToastContainer />
     </div>

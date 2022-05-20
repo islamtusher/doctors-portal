@@ -9,7 +9,6 @@ import Loading from '../loading/Loading';
 const MyAppointment = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(auth)
-    // const [bookingData, setBookingData] = useState([])
 
     // Load current user booked appointments
     const { data: appointments, isLoading } = useQuery(['bookingData', user], () => 
@@ -18,7 +17,6 @@ const MyAppointment = () => {
             headers: {'authorization': `Bearer ${localStorage.getItem('accessToken')}`}
         })
             .then(res => {
-                console.log(res)
                 if (res.status === 403 || res.status === 401) {
                     navigate('/')
                     signOut(auth)
@@ -26,22 +24,11 @@ const MyAppointment = () => {
                     return
                 }
                 return res.json()
-            }).catch(error => {
-                console.log(error);
             })
     )
-    // useEffect(() => {
-    //     if (error) {
-    //         console.log(error);
-    //         return
-    //     }
-    // },[error])
     if (loading || isLoading) {
         return <Loading data='Logining...'></Loading>
     }
-    
-    // console.log(appointments);
-    
     return (
         <div className='w-full'>
             <h1>My Appointments : {appointments?.length}</h1>
