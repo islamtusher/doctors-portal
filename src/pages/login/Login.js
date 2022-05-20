@@ -34,6 +34,7 @@ const Login = () => {
         if (user) {
             toast('User LogIn')
             reset()
+            console.log('inside effect');
         }
     }, [user, reset, from, navigate])
 

@@ -5,6 +5,7 @@ import auth from '../../firebaseConfig';
 const useAdmin = () => {
     const [user] = useAuthState(auth)
     const [admin, setAdmin] = useState(false)
+    const [adminLoading, setAdminLoading] = useState(true)
     useEffect(() => {
         fetch(`http://localhost:5000/admin/${user?.email}`, {
         method: 'GET',
@@ -15,13 +16,12 @@ const useAdmin = () => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             setAdmin(data.isAdmin)
-
+            setAdminLoading(false)
         })
     }, [user?.email])
     
-    return [admin]
+    return [admin, adminLoading]
 };
 
 export default useAdmin;

@@ -19,9 +19,9 @@ import MyAppointment from './pages/myAppointment/MyAppointment';
 import MyReviews from './pages/myReviews/MyReviews';
 import Users from './pages/dashBoard/Users';
 import useAdmin from './pages/hooks/useAdmin';
+import RequireAdmin from './pages/RequireAdmin';
 
 function App() {
-  const [admin] = useAdmin()
   return (
     <div className='max-w-[1488px] mx-auto'>
       <Navbar></Navbar>
@@ -43,7 +43,7 @@ function App() {
         <Route path='/dashboard' element={<RequireAuth><DashBoard></DashBoard></RequireAuth>}>
           <Route index element={<MyAppointment/>}></Route>
           <Route path="myreviews" element={<MyReviews/>} ></Route>
-          {admin && <Route path="users" element={<Users />} ></Route>}
+          <Route path="users" element={<RequireAdmin><Users /></RequireAdmin>} ></Route>
         </Route>
         <Route path='/reviews' element={<Reviews></Reviews>} ></Route>
         <Route path='/contact' element={<Contact></Contact>} ></Route>
