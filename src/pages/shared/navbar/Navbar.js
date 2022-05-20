@@ -4,15 +4,22 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../../firebaseConfig';
 import CustomLink from '../../customLInk/CustomLink';
-import LoginModal from '../../loginModal/LoginModal';
-import SignupModal from '../../signupModal/SignupModal';
 
 const Navbar = () => {
     const [user, loading, error] = useAuthState(auth)
-    const [currentUser, setCurrentUser] = useState('')
+    const [currentUserName, setCurrentUserName] = useState('')
+
+    // split user Name
     useEffect(() => {
-        setCurrentUser(user?.displayName?.split(' ')[0])
-    },[user?.displayName])
+        setCurrentUserName(user?.displayName?.split(' ')[0])
+    }, [user?.displayName])
+
+    // handle Sign Out
+    const handleSignOut = () => {
+        signOut(auth)
+        localStorage.removeItem('accessToken')
+    }
+    
     const navMenu = <>
         <li><CustomLink to="/">Home</CustomLink></li>
         <li><CustomLink to="/about">About</CustomLink></li>
@@ -24,8 +31,8 @@ const Navbar = () => {
             user?.email ? 
                 <>  
                     <li><CustomLink to="/dashboard">Dashboard</CustomLink></li>
-                    <button className='btn btn-ghost' onClick={() => signOut(auth)}>SignOut</button>
-                    <li><p>{currentUser}</p></li>
+                    <button className='btn btn-ghost' onClick={handleSignOut}>SignOut</button>
+                    <li><p>{currentUserName}</p></li>
                 </>
                 :
                 <>

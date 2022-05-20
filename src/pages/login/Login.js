@@ -16,7 +16,7 @@ const Login = () => {
     // react form hooks
     const { register, handleSubmit, reset,getValues, formState: { errors } } = useForm(); 
     // // custom Hooks
-    // const [token] = useUserToken(user)
+    const [token] = useUserToken(user)
     
     // react firebase hooks
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
@@ -26,9 +26,12 @@ const Login = () => {
     const [hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''})
     
     const from = location.state?.from?.pathname || "/";
+    if (token) {
+        navigate(from, { replace: true });
+    }
+    
     useEffect(() => {
         if (user) {
-            navigate(from, { replace: true });
             toast('User LogIn')
             reset()
         }

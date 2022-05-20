@@ -22,17 +22,18 @@ const SignUp = () => {
     
     // custom Hooks
     const [token] = useUserToken(user)
-    
+
     // Handle Sing Up form
     const onSubmit = async (data) => {
         await createUserWithEmailAndPassword(data.email, data.password)
         await updateProfile({ displayName: data.name })
     }
-
+    if (token) {
+        navigate('/')
+    }
     // reset form inputs & signUp conformation
     useEffect(() => {
         if (user) {
-            navigate('/')
             toast('New User Register')
             reset()
         }
