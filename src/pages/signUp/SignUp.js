@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebaseConfig';
+import useUserToken from '../hooks/useUserToken';
 import Loading from '../loading/Loading';
 
 const SignUp = () => {
@@ -18,6 +19,9 @@ const SignUp = () => {
     const [createUserWithEmailAndPassword, ,creatingUserLoading, creatingUserError,] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification : true});
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
     const [updateProfile] = useUpdateProfile(auth);
+    
+    // custom Hooks
+    const [token] = useUserToken(user)
     
     // Handle Sing Up form
     const onSubmit = async (data) => {

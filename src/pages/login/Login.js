@@ -6,22 +6,26 @@ import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { async } from '@firebase/util';
 import Loading from '../loading/Loading';
+import useUserToken from '../hooks/useUserToken';
 
 const Login = () => {
     const [user] = useAuthState(auth) // current User
     const [email, setEmail] = useState('')
     const navigate = useNavigate()
     const location = useLocation()
-    const from = location.state?.from?.pathname || "/";
-    
-    const { register, handleSubmit, reset,getValues, formState: { errors } } = useForm(); // react form hooks
-    const[hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''}) // Errors by react firebase hooks
+    // react form hooks
+    const { register, handleSubmit, reset,getValues, formState: { errors } } = useForm(); 
+    // // custom Hooks
+    // const [token] = useUserToken(user)
     
     // react firebase hooks
     const [signInWithGoogle, ,googleSignInLoading, googleSignInError] = useSignInWithGoogle(auth);
     const [ signInWithEmailAndPassword, , loading, emailPassSignInError] = useSignInWithEmailAndPassword(auth);
     const [sendPasswordResetEmail, sending, passwordResetError] = useSendPasswordResetEmail(auth);
+     // Errors by react firebase hooks
+    const [hooksErrors, setHooksErrors] = useState({emailError : '', passwordError: ''})
     
+    const from = location.state?.from?.pathname || "/";
     useEffect(() => {
         if (user) {
             navigate(from, { replace: true });
