@@ -6,10 +6,15 @@ import Loading from '../loading/Loading';
 
 const MyAppointment = () => {
     const [user, loading] = useAuthState(auth)
-    const [bookingData, setBookingData] = useState([])
+    // const [bookingData, setBookingData] = useState([])
 
     const { data: appointments, isLoading } = useQuery(['bookingData', user], () => 
-        fetch(`http://localhost:5000/booking?email=${user?.email}`)
+        fetch(`http://localhost:5000/booking?email=${user?.email}`, {
+            method: 'GET',
+            headers: {
+                'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
         .then(res => res.json())
     )
     if (loading || isLoading) {
