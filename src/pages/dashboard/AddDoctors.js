@@ -1,31 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import React, { useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebaseConfig';
-import useUserToken from '../hooks/useUserToken';
 
 const AddDoctors = () => {
     const [user] = useAuthState(auth) // current User
     const navigate = useNavigate()
     const { register, handleSubmit, reset, formState: { errors } } = useForm(); // react form hooks
-    // const [loading, setLoading] = useState(false) //rmv loading
 
     const { data: services, isLoading, refetch } = useQuery(['servicesData', user], () =>
         fetch(`http://localhost:5000/availableServices`)
         .then(res => res.json())
     )
-    // console.log(services);
+
+    const imageApiKey = 'edc8d4e921a65908d428d43888b23e70'
+
     // Handle Sing Up form
     const onSubmit = async (data) => {
-        console.log(data);
+        const doctorImage = data?.image[0] 
+        const formData = new FormData()
+        formData.append('image', doctorImage)
+        fetch(`https://api.imgbb.com/1/upload?key=${imageApiKey}`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success === true) {
+                    const doctorInfo = {
+                        name: data?.name,
+                        email: data?.email,
+                        apecialisation: data?.specialisation,
+                        image: result?.data?.url
+                    }
+                    // Store the doctor Info on DB
+                    fetch('http://localhost:5000/doctors', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(doctorInfo)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.acknowledged === true) {
+                                toast('Doctor Add Successfully')
+                                reset() // reset input filds
+                            }
+                            else {
+                                toast.error('Something Wrong Please Check')
+                            }
+                        })
+                }
+        })
+
+        
+        
     }
 
     // reset form inputs & signUp conformation
     useEffect(() => {
-    }, [user, reset, navigate])
+    }, [user])
 
    
     return (
@@ -90,12 +129,12 @@ const AddDoctors = () => {
                         </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
-                                <span className="label-text text-lg">Picture</span>
+                                <span className="label-text text-lg">Image</span>
                             </label>
                             <input
                                 type='file'
                                 className="input w-full "
-                                {...register("picture", { required: true })}
+                                {...register("image", { required: true })}
                             />
                         </div>
                         

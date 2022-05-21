@@ -53,11 +53,7 @@ function App() {
         <Route path='/signup' element={<SignUp></SignUp>} ></Route>
       </Routes>
       <Footer></Footer>
-      <ToastContainer
-        position="top-right"
-        autoClose={500}
-        closeOnClick
-        />
+      <ToastContainer/>
         <ToastContainer />
     </div>
   );
