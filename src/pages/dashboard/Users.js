@@ -3,14 +3,19 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import auth from '../../firebaseConfig';
+import Loading from '../loading/Loading';
 
 const Users = () => {
     const [user, loading] = useAuthState(auth)
 
-    const { isLoading, error, data: users, refetch } = useQuery('users', () =>
-    fetch('https://guarded-reef-65351.herokuapp.com/users').then(res =>
-      res.json()
+    const { isLoading, error, data: users, refetch } = useQuery(['users', user], () =>
+        fetch('https://guarded-reef-65351.herokuapp.com/users').then(res =>
+            res.json()
         ))
+    
+    if (loading || isLoading) {
+        return <Loading data='Loadding...'></Loading>
+    }
     
     // handle User Deleting
     const handleUserDelete = (userDelete) => {
