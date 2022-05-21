@@ -8,7 +8,7 @@ const useUserToken = (user) => {
         const updateUser = { email: email }
 
         if (email) {
-            fetch(`http://localhost:5000/user/${email}`,{
+            fetch(`https://guarded-reef-65351.herokuapp.com/user/${email}`,{
             method: 'PUT',
             headers: {
                 'Content-type' : 'application/json'

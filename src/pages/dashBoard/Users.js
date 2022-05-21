@@ -8,13 +8,13 @@ const Users = () => {
     const [user, loading] = useAuthState(auth)
 
     const { isLoading, error, data: users, refetch } = useQuery('users', () =>
-    fetch('http://localhost:5000/users').then(res =>
+    fetch('https://guarded-reef-65351.herokuapp.com/users').then(res =>
       res.json()
         ))
     
     // handle User Deleting
     const handleUserDelete = (userDelete) => {
-        fetch(`http://localhost:5000/user/${userDelete?.email}`, {
+        fetch(`https://guarded-reef-65351.herokuapp.com/user/${userDelete?.email}`, {
             method: 'DELETE',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const Users = () => {
     // handle user add to admin 
     const handleAdmin = (adminUser) => {
         console.log(adminUser?.email);
-        fetch(`http://localhost:5000/user/admin/${adminUser?.email}`, {
+        fetch(`https://guarded-reef-65351.herokuapp.com/user/admin/${adminUser?.email}`, {
             method: 'PUT',
             headers: {
                 'authorization': `Bearer ${localStorage.getItem('accessToken')}`

@@ -25,7 +25,7 @@ const BookingModal = ({ service, date, setService, refetch }, ) => {
         }
         setError('')
         // Store the Booking Info on DB
-        fetch('http://localhost:5000/bookingInfo', {
+        fetch('https://guarded-reef-65351.herokuapp.com/bookingInfo', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

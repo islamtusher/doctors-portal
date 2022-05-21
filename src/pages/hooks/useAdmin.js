@@ -7,7 +7,7 @@ const useAdmin = () => {
     const [admin, setAdmin] = useState(false)
     const [adminLoading, setAdminLoading] = useState(true)
     useEffect(() => {
-        fetch(`http://localhost:5000/admin/${user?.email}`, {
+        fetch(`https://guarded-reef-65351.herokuapp.com/admin/${user?.email}`, {
         method: 'GET',
         headers: {
             'Content-type': 'application/json',

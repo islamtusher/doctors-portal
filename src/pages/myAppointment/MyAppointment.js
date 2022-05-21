@@ -12,7 +12,7 @@ const MyAppointment = () => {
 
     // Load current user booked appointments
     const { data: appointments, isLoading } = useQuery(['bookingData', user], () => 
-        fetch(`http://localhost:5000/booking?email=${user?.email}`, {
+        fetch(`https://guarded-reef-65351.herokuapp.com/booking?email=${user?.email}`, {
             method: 'GET',
             headers: {'authorization': `Bearer ${localStorage.getItem('accessToken')}`}
         })

@@ -10,7 +10,7 @@ const AvailableServices = ({ date }) => {
     const formatedDate = format(date, 'PP')
 
     const { data: services, isLoading, refetch } = useQuery(['servicesData', formatedDate], () =>
-        fetch(`http://localhost:5000/available?date=${formatedDate}`)
+        fetch(`https://guarded-reef-65351.herokuapp.com/available?date=${formatedDate}`)
         .then(res => res.json())
     )
     
@@ -19,7 +19,7 @@ const AvailableServices = ({ date }) => {
     }
     //rmv have a batter option for this on top
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/available?date=${formatedDate}`)
+    //     fetch(`https://guarded-reef-65351.herokuapp.com/available?date=${formatedDate}`)
     //         .then(res => res.json())
     //         .then(data => setServices(data))
     // }, [formatedDate])
